@@ -30,28 +30,31 @@ private:
     void init_k_center(float (*data_range)[2], vector< vector<float> > &k_center, int k);
     
     //计算数据点与中心点之间的距离
-    double calculate_distance(vector<float> data, vector<float> center);
+    float calculate_distance(vector<float> data, vector<float> center);
     
     //计算每一个样本所属类别，同时返回总距离即目标函数值
-    double calculate_data_class(vector< vector<float> > data, vector< vector<float> > k_center, vector<int> &data_class);
+    float calculate_data_class(vector< vector<float> > data, vector< vector<float> > k_center, vector<int> &data_class);
     
     void calculate_new_class(vector< vector<float> > data, vector< vector<float> > &k_center, vector<int> data_class);
     
     //实现普通版本的kmeans算法的函数
-    void kmeans(vector< vector<float> > data, int k, float epsilon);
+    vector<int> kmeans(vector< vector<float> > data, int k, float epsilon);
     
     //实现模拟退火版本的Kmeans算法的函数
-    void kmeans(vector< vector<float> > data, int k, float K, float init_temperature, float end_temperature);
-
+    vector<int> kmeans(vector< vector<float> > data, int k, float K, float init_temperature, float end_temperature, float epsilon);
+    
+    //对聚类结果进行评价
+    void get_result_value(vector<string> data_class, vector<int> result);
 public:
     //实现普通版本的Kmeans算法的初始化函数
-    Kmeans(vector< vector<float> > data, int k, float epsilon);
+    Kmeans(vector< vector<float> > data, vector<string> data_class, int k, float epsilon);
     //输入参数data用于存储算法的数据
+    //data_class表示数据的类别
     //输入参数k表示聚类中心的个数
     //输入参数epsilon表示算法的终止条件
     
     //实现模拟退火版本的Kmeans算法的初始化函数
-    Kmeans(vector< vector<float> > data, int k, float K, float init_temperature, float end_temperature);
+    Kmeans(vector< vector<float> > data, vector<string> data_class, int k, float K, float init_temperature, float end_temperature, float epsilon);
     //参数K表示玻尔兹曼常数
     //参数init_temperature表示模拟退火算法的初始温度
     //参数end_temperature表示模拟退火算法的最低温度

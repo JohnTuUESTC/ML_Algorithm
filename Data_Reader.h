@@ -26,6 +26,6 @@ public:
     //参数file_address表示存储数据文件的地址
     
     //从atff格式的文件中读取数据
-    pair< vector< vector<float> >, vector<string>> Read_from_atff();
+    pair< vector< vector<float> >, vector<string> > Read_from_arff();
     //输出参数的第一项表示所存储的数据，第二项表示数据所对应的类标签。如果数据没有对应的类标签，则该容器为空
 };
