@@ -179,7 +179,7 @@ vector<int> Kmeans::kmeans(vector< vector<float> > data, int k, float epsilon){
     }
     
     cout<<"--------------普通版本Kmeans算法结束---------------"<<endl;
-    delete data_range;
+    delete [] data_range;
     return data_class;
 }
 
@@ -245,45 +245,20 @@ vector<int> Kmeans::kmeans(vector< vector<float> > data, int k, float K, float i
     }
     
     cout<<"------------模拟退火版本Kmeans算法结束--------------"<<endl;
-    delete data_range;
+    delete [] data_range;
     return data_class;
 }
 
-//对聚类结果进行评价
-void Kmeans::get_result_value(vector<string> data_class, vector<int> result){
-    vector<int> temp_data_class(data_class.size());//将类标签数字化
-    string label = data_class[0];
-    int int_label = 0;
-    for (vector<string>::size_type i = 0; i < data_class.size(); i++) {
-        if (data_class[i] == label) {
-            temp_data_class.push_back(int_label);
-        }
-        else{
-            label = data_class[i];
-            int_label++;
-            temp_data_class.push_back(int_label);
-        }
-    }
-    
-    //计算聚类的正确率
-    int correct_result = 0;
-    for (vector<int>::size_type i = 0; i < result.size(); i++) {
-        if(result[i] == temp_data_class[i]){
-            correct_result++;
-        }
-    }
-    
-    cout<<"聚类算法的准确率为："<<(float)correct_result/result.size()<<endl;
-}
-
 //实现普通版本Kmeans算法的构造函数
-Kmeans::Kmeans(vector< vector<float> > data, vector<string> data_class, int k, float epsilon){
-    vector<int> result = kmeans(data, k, epsilon);
-    get_result_value(data_class, result);
+Kmeans::Kmeans(vector< vector<float> > data, int k, float epsilon){
+     data_class = kmeans(data, k, epsilon);
 }
 
 //实现模拟退火版本的Kmeans算法的构造函数
-Kmeans::Kmeans(vector< vector<float> > data, vector<string> data_class, int k, float K, float init_temperature, float end_temperature, float epsilon){
-    vector<int> result = kmeans(data, k, k, init_temperature, end_temperature, epsilon);
-    get_result_value(data_class, result);
+Kmeans::Kmeans(vector< vector<float> > data, int k, float K, float init_temperature, float end_temperature, float epsilon){
+    data_class = kmeans(data, k, k, init_temperature, end_temperature, epsilon);
+}
+
+vector<int> Kmeans::return_data_class(){
+    return data_class;
 }
